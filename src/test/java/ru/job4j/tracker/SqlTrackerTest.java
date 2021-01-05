@@ -12,11 +12,11 @@ public class SqlTrackerTest {
         try (InputStream in = SqlTracker.class.getClassLoader().getResourceAsStream("config.properties")) {
             Properties config = new Properties();
             config.load(in);
-            Class.forName(config.getProperty("db.driver"));
+            Class.forName(config.getProperty("driver"));
             return DriverManager.getConnection(
-                    config.getProperty("db.url"),
-                    config.getProperty("db.username"),
-                    config.getProperty("db.password"));
+                    config.getProperty("url"),
+                    config.getProperty("username"),
+                    config.getProperty("password"));
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
