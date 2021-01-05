@@ -79,18 +79,10 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
                 <configuration>
-                    <source>13</source>
-                    <target>13</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>13</source>
-                    <target>13</target>
+                    <testFailureIgnore>true</testFailureIgnore>
                 </configuration>
             </plugin>
         </plugins>

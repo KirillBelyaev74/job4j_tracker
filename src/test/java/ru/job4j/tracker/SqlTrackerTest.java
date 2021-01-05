@@ -8,25 +8,15 @@ import static org.junit.Assert.assertThat;
 
 public class SqlTrackerTest {
 
-    public Connection init() {
-        try (InputStream in = SqlTracker.class.getClassLoader().getResourceAsStream("config.properties")) {
-            Properties config = new Properties();
-            config.load(in);
-            Class.forName(config.getProperty("driver"));
-            return DriverManager.getConnection(
-                    config.getProperty("url"),
-                    config.getProperty("username"),
-                    config.getProperty("password"));
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        }
-    }
-
     @Test
-    public void createItem() throws Exception {
-        try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
-            tracker.add(new Item("desc"));
-            assertThat(tracker.findByName("desc").size(), is(1));
+    public void createItem() {
+        try {
+            SqlTracker tracker = new SqlTracker();
+            tracker.init();
+            tracker.add(new Item("100"));
+            assertThat(tracker.findByName("100").get(0).getName(), is("100"));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

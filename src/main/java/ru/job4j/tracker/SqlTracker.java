@@ -7,10 +7,6 @@ public class SqlTracker implements Store {
 
     private Connection connection;
 
-    public SqlTracker(Connection connection) {
-        this.connection = connection;
-    }
-
     public void init() {
         try (InputStream inputStream = SqlTracker.class.getClassLoader().getResourceAsStream("config.properties")) {
             Properties properties = new Properties();
@@ -20,7 +16,6 @@ public class SqlTracker implements Store {
                     properties.getProperty("url"),
                     properties.getProperty("username"),
                     properties.getProperty("password"));
-            this.createTable();
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
@@ -33,22 +28,12 @@ public class SqlTracker implements Store {
         }
     }
 
-    public void createTable() {
-        try {
-            Statement statement = connection.createStatement();
-            statement.execute(
-                    "create table if not exists items(id serial primary key, name varchar(20) not null)");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
     @Override
     public Item add(Item item) {
         try (PreparedStatement preparedStatement = this.connection.prepareStatement(
                 "insert into items(name) values (initcap(?));", Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, item.getName());
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
                 item.setId(String.valueOf(resultSet.getInt("id")));
@@ -140,7 +125,7 @@ public class SqlTracker implements Store {
 
     public static void main(String[] args) {
         Input validate = new ValidateInput(new ConsoleInput());
-        try (Store tracker = new SqlTracker(null)) {
+        try (Store tracker = new SqlTracker()) {
             tracker.init();
             ArrayList<BaseAction> actions = new ArrayList<>();
             actions.add(new CreateAction(0, "Добавление"));

@@ -9,8 +9,15 @@ public class ReplaceAction extends BaseAction {
     }
 
     public boolean execute(Input input, Store store, Consumer<String> output) {
-        String id = input.askStr("Введите ID: ");
-        String newName = input.askStr("Введите новое имя: ");
+        String id;
+        String newName;
+        while (true) {
+            id = input.askStr("Введите ID: ");
+            newName = input.askStr("Введите новое имя: ");
+            if (id != null && newName != null) {
+                break;
+            }
+        }
         Item newItem = new Item(newName);
         store.replace(id, newItem);
         return true;
