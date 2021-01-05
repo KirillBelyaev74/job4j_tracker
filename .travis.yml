@@ -1,0 +1,20 @@
+language: java
+
+jdk:
+  - openjdk14
+
+sudo: false
+
+env:
+  global:
+    - CODECOV_TOKEN="dca401a0-aa7c-4758-8259-9c2e5dbea0e0"
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+notifications:
+  email:
+    recipients:
+      -kirbel74@gmail.com
+    on_success: never # default: change
+    on_failure: always # default: always
