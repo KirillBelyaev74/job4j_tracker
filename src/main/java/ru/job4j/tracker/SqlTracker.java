@@ -12,14 +12,14 @@ public class SqlTracker implements Store {
     }
 
     public void init() {
-        try (InputStream in = SqlTracker.class.getClassLoader().getResourceAsStream("config.properties")) {
-            Properties config = new Properties();
-            config.load(in);
-            Class.forName(config.getProperty("db.driver"));
+        try (InputStream inputStream = SqlTracker.class.getClassLoader().getResourceAsStream("config.properties")) {
+            Properties properties = new Properties();
+            properties.load(inputStream);
+            Class.forName(properties.getProperty("driver"));
             this.connection = DriverManager.getConnection(
-                    config.getProperty("db.url"),
-                    config.getProperty("db.username"),
-                    config.getProperty("db.password"));
+                    properties.getProperty("url"),
+                    properties.getProperty("username"),
+                    properties.getProperty("password"));
             this.createTable();
         } catch (Exception e) {
             throw new IllegalStateException(e);
