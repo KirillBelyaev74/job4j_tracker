@@ -6,6 +6,8 @@ import ru.job4j.tracker.action.DeleteAction;
 import ru.job4j.tracker.input.Input;
 import ru.job4j.tracker.input.ValidateInput;
 import ru.job4j.tracker.item.Item;
+import ru.job4j.tracker.store.Store;
+import ru.job4j.tracker.store.Tracker;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
