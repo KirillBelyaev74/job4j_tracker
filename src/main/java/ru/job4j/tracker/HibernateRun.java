@@ -6,6 +6,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class HibernateRun {
@@ -15,7 +16,7 @@ public class HibernateRun {
                 .configure().build();
         try {
             SessionFactory sf = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-            Items items = create(new Items("Learn Hibernate"), sf);
+            Items items = create(new Items("Learn Hibernate", "Desc", new Timestamp(System.currentTimeMillis())), sf);
             System.out.println(items);
             items.setName("Learn Hibernate 5.");
             update(items, sf);
@@ -27,7 +28,7 @@ public class HibernateRun {
             for (Items it : list) {
                 System.out.println(it);
             }
-        }  catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             StandardServiceRegistryBuilder.destroy(registry);
@@ -54,7 +55,7 @@ public class HibernateRun {
     public static void delete(Integer id, SessionFactory sf) {
         Session session = sf.openSession();
         session.beginTransaction();
-        Items item = new Items(null);
+        Items item = new Items(null, null, null);
         item.setId(id);
         session.delete(item);
         session.getTransaction().commit();
