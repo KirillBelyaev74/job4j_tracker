@@ -12,13 +12,13 @@ import java.util.List;
 
 public class HbmTracker {
 
-    private static final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+    private static final StandardServiceRegistry REGISTRY = new StandardServiceRegistryBuilder()
             .configure().build();
-    private static final SessionFactory sf = new MetadataSources(registry)
+    private static final SessionFactory SESSION_FACTORY = new MetadataSources(REGISTRY)
             .buildMetadata().buildSessionFactory();
 
     public Items add(Items items) {
-        try (Session session = sf.openSession()) {
+        try (Session session = SESSION_FACTORY.openSession()) {
             session.beginTransaction();
             session.save(items);
             session.getTransaction().commit();
@@ -28,7 +28,7 @@ public class HbmTracker {
 
     public boolean replace(String id, Items items) {
         int result;
-        try (Session session = sf.openSession()) {
+        try (Session session = SESSION_FACTORY.openSession()) {
             session.beginTransaction();
             Query query = session.createQuery("update Items set name =: name, created =: created, description =: description where id =: id");
             query.setParameter("name", items.getName());
@@ -43,7 +43,7 @@ public class HbmTracker {
 
     public boolean delete(String id) {
         int result;
-        try (Session session = sf.openSession()) {
+        try (Session session = SESSION_FACTORY.openSession()) {
             session.beginTransaction();
             Query query = session.createQuery("delete Items where id =: id");
             query.setParameter("id", Integer.parseInt(id));
@@ -55,7 +55,7 @@ public class HbmTracker {
 
     public List<Items> findAll() {
         List<Items> items;
-        try (Session session = sf.openSession()) {
+        try (Session session = SESSION_FACTORY.openSession()) {
             session.beginTransaction();
             items = session.createQuery("from Items order by id").list();
             session.getTransaction().commit();
@@ -65,7 +65,7 @@ public class HbmTracker {
 
     public List<Items> findByName(String key) {
         List<Items> items;
-        try (Session session = sf.openSession()) {
+        try (Session session = SESSION_FACTORY.openSession()) {
             session.beginTransaction();
             Query query = session.createQuery("from Items where name =: name order by id");
             items = query.setParameter("name", key).list();
@@ -76,7 +76,7 @@ public class HbmTracker {
 
     public Items findById(String id) {
         Items items;
-        try (Session session = sf.openSession()) {
+        try (Session session = SESSION_FACTORY.openSession()) {
             session.beginTransaction();
             items = session.get(Items.class, Integer.parseInt(id));
             session.getTransaction().commit();
@@ -85,7 +85,7 @@ public class HbmTracker {
     }
 
     public void close() throws Exception {
-        StandardServiceRegistryBuilder.destroy(registry);
-        sf.close();
+        StandardServiceRegistryBuilder.destroy(REGISTRY);
+        SESSION_FACTORY.close();
     }
 }
