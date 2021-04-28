@@ -84,6 +84,16 @@ public class HbmTracker {
         return items;
     }
 
+    public boolean clearTable() {
+        int result = 0;
+        try (Session session = SESSION_FACTORY.openSession()) {
+            session.beginTransaction();
+            Query<Items> query = session.createQuery("delete from Items");
+            result = query.executeUpdate();
+        }
+        return result != 0;
+    }
+
     public void close() throws Exception {
         StandardServiceRegistryBuilder.destroy(REGISTRY);
         SESSION_FACTORY.close();
