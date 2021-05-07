@@ -1,4 +1,5 @@
 package ru.job4j.tracker.store;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.job4j.tracker.StartUI;
 import ru.job4j.tracker.action.*;
 import ru.job4j.tracker.input.ConsoleInput;
@@ -131,7 +132,10 @@ public class SqlTracker implements Store {
     }
 
     public static void main(String[] args) {
-        Input validate = new ValidateInput(new ConsoleInput());
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        context.scan("ru.job4j.tracker");
+        context.refresh();
+        Input validate = context.getBean(ValidateInput.class);
         try (Store tracker = new SqlTracker()) {
             tracker.init();
             ArrayList<BaseAction> actions = new ArrayList<>();

@@ -1,15 +1,14 @@
 package ru.job4j.tracker.input;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.job4j.tracker.MenuOutException;
 
 @Component
 public class ValidateInput implements Input {
-    private final Input input;
 
-    public ValidateInput(ConsoleInput consoleInput) {
-        this.input = consoleInput;
-    }
+    @Autowired
+    private Input input;
 
     @Override
     public String askStr(String question) {

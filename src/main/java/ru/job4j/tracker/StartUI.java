@@ -1,5 +1,6 @@
 package ru.job4j.tracker;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 import ru.job4j.tracker.action.*;
@@ -14,7 +15,9 @@ import java.util.function.Consumer;
 
 public class StartUI {
 
+    @Autowired
     private final Input input;
+    @Autowired
     private final Store store;
     private final Consumer<String> output;
 
