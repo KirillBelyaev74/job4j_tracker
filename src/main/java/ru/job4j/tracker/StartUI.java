@@ -50,7 +50,7 @@ public class StartUI {
         context.refresh();
 
         Input validate = context.getBean(ValidateInput.class);
-        Tracker tracker = context.getBean(Tracker.class);
+        Store store = context.getBean(Store.class);
 
         ArrayList<BaseAction> actions = new ArrayList<>();
         actions.add(new CreateAction(0, "Добавление"));
@@ -59,6 +59,6 @@ public class StartUI {
         actions.add(new FindAllAction(3, "Показать все"));
         actions.add(new FindByNameAction(4, "Найти по имени"));
         actions.add(new FindByIdAction(5, "Найти по ID"));
-        new StartUI(validate, tracker, System.out::println).init(actions);
+        new StartUI(validate, store, System.out::println).init(actions);
     }
 }

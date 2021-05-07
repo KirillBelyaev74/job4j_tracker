@@ -1,10 +1,12 @@
 package ru.job4j.tracker.input;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ru.job4j.tracker.MenuOutException;
 
 @Component
+@Scope("prototype")
 public class ValidateInput implements Input {
 
     @Autowired
