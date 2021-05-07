@@ -8,6 +8,9 @@ public class ConsoleInput implements Input {
 
     private Scanner scanner = new Scanner(System.in);
 
+    public ConsoleInput() {
+    }
+
     /**
      * Метод запрашивает у пользователя выбрать пунк меню
      *

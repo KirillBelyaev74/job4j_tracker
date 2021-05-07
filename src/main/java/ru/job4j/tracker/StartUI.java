@@ -1,9 +1,11 @@
 package ru.job4j.tracker;
 
+import org.hibernate.Transaction;
 import ru.job4j.tracker.action.*;
 import ru.job4j.tracker.input.ConsoleInput;
 import ru.job4j.tracker.input.Input;
 import ru.job4j.tracker.input.ValidateInput;
+import ru.job4j.tracker.store.Context;
 import ru.job4j.tracker.store.Store;
 import ru.job4j.tracker.store.Tracker;
 
@@ -40,9 +42,14 @@ public class StartUI {
     }
 
     public static void main(String[] args) {
-        Input input = new ConsoleInput();
-        Input validate = new ValidateInput(input);
-        Tracker tracker = new Tracker();
+        Context context = new Context();
+        context.reg(ConsoleInput.class);
+        context.reg(ValidateInput.class);
+        context.reg(Tracker.class);
+
+        Input validate = context.get(ValidateInput.class);
+        Tracker tracker = context.get(Tracker.class);
+
         ArrayList<BaseAction> actions = new ArrayList<>();
         actions.add(new CreateAction(0, "Добавление"));
         actions.add(new ReplaceAction(1, "Редактирование"));

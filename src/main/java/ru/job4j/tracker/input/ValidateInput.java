@@ -5,8 +5,8 @@ import ru.job4j.tracker.MenuOutException;
 public class ValidateInput implements Input {
     private final Input input;
 
-    public ValidateInput(Input input) {
-        this.input = input;
+    public ValidateInput(ConsoleInput consoleInput) {
+        this.input = consoleInput;
     }
 
     @Override
