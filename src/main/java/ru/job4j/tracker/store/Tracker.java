@@ -1,11 +1,13 @@
 package ru.job4j.tracker.store;
 
+import org.springframework.stereotype.Component;
 import ru.job4j.tracker.item.Item;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+@Component
 public class Tracker implements Store {
     /**
      * Массив для хранение заявок.

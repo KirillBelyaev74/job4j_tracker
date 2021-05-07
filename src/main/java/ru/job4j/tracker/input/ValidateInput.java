@@ -1,7 +1,9 @@
 package ru.job4j.tracker.input;
 
+import org.springframework.stereotype.Component;
 import ru.job4j.tracker.MenuOutException;
 
+@Component
 public class ValidateInput implements Input {
     private final Input input;
 

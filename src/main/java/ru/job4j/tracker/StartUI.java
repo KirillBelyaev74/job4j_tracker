@@ -1,12 +1,11 @@
 package ru.job4j.tracker;
 
-import org.hibernate.Transaction;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 import ru.job4j.tracker.action.*;
 import ru.job4j.tracker.input.ConsoleInput;
 import ru.job4j.tracker.input.Input;
 import ru.job4j.tracker.input.ValidateInput;
-import ru.job4j.tracker.store.Context;
 import ru.job4j.tracker.store.Store;
 import ru.job4j.tracker.store.Tracker;
 
@@ -44,11 +43,7 @@ public class StartUI {
 
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-
-        context.register(ConsoleInput.class);
-        context.register(ValidateInput.class);
-        context.register(Tracker.class);
-
+        context.scan("ru.job4j.tracker");
         context.refresh();
 
         Input validate = context.getBean(ValidateInput.class);
