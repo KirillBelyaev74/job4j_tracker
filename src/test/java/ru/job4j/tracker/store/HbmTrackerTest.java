@@ -1,5 +1,6 @@
 package ru.job4j.tracker.store;
 
+import org.junit.After;
 import org.junit.Test;
 import ru.job4j.tracker.item.Items;
 
@@ -15,6 +16,14 @@ public class HbmTrackerTest {
     private final Items first = new Items("first", "descOne", new Timestamp(System.currentTimeMillis()));
     private final Items second = new Items("second", "descTwo", new Timestamp(System.currentTimeMillis()));
     private final Items third = new Items("third", "descThree", new Timestamp(System.currentTimeMillis()));
+
+    @After
+    public void finish() {
+        tracker.action(session -> {
+            session.createQuery("delete from Items").executeUpdate();
+            return null;
+        });
+    }
 
     @Test
     public void whenAddItemsThenFindAllTheItems() {
