@@ -1,6 +1,7 @@
 package ru.job4j.tracker;
 
 import org.hibernate.Transaction;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.job4j.tracker.action.*;
 import ru.job4j.tracker.input.ConsoleInput;
 import ru.job4j.tracker.input.Input;
@@ -42,13 +43,16 @@ public class StartUI {
     }
 
     public static void main(String[] args) {
-        Context context = new Context();
-        context.reg(ConsoleInput.class);
-        context.reg(ValidateInput.class);
-        context.reg(Tracker.class);
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
 
-        Input validate = context.get(ValidateInput.class);
-        Tracker tracker = context.get(Tracker.class);
+        context.register(ConsoleInput.class);
+        context.register(ValidateInput.class);
+        context.register(Tracker.class);
+
+        context.refresh();
+
+        Input validate = context.getBean(ValidateInput.class);
+        Tracker tracker = context.getBean(Tracker.class);
 
         ArrayList<BaseAction> actions = new ArrayList<>();
         actions.add(new CreateAction(0, "Добавление"));
