@@ -13,9 +13,7 @@ public class FindAllAction extends BaseAction {
     }
 
     public boolean execute(Input input, Store store, Consumer<String> output) {
-        for (Item item : store.findAll()) {
-            output.accept(String.format("%s, %s", item.getName(), item.getId()));
-        }
+        store.findAll(System.out::print);
         return true;
     }
 }

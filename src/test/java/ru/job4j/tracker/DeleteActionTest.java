@@ -25,6 +25,6 @@ public class DeleteActionTest {
         Input input = mock(ValidateInput.class);
         when(input.askStr(any(String.class))).thenReturn(item.getId());
         baseAction.execute(input, tracker, null);
-        assertTrue(tracker.findAll().isEmpty());
+        assertTrue(tracker.findAll(null).isEmpty());
     }
 }

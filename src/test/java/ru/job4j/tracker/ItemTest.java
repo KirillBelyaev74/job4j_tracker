@@ -21,7 +21,7 @@ public class ItemTest {
         tracker.add(first);
         tracker.add(second);
         tracker.add(third);
-        List<Item> result = tracker.findAll();
+        List<Item> result = tracker.findAll(null);
         Collections.sort(result);
         List<Item> expect = Arrays.asList(third, second, first);
         assertThat(result, is(expect));
@@ -35,7 +35,7 @@ public class ItemTest {
         tracker.add(first);
         tracker.add(second);
         tracker.add(third);
-        List<Item> result = tracker.findAll();
+        List<Item> result = tracker.findAll(null);
         Collections.sort(result, Collections.reverseOrder());
         List<Item> expect = Arrays.asList(second, third, first);
         assertThat(result, is(expect));

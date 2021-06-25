@@ -7,6 +7,7 @@ import ru.job4j.tracker.item.Item;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Consumer;
 
 @Component
 @Scope("prototype")
@@ -75,7 +76,7 @@ public class Tracker implements Store {
      *
      * @return - массив без null элементов
      */
-    public List<Item> findAll() {
+    public List<Item> findAll(Consumer<String> consumer) {
         return this.items;
     }
 

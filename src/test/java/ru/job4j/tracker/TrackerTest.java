@@ -39,7 +39,7 @@ public class TrackerTest {
         tracker.add(item3);
         tracker.add(item4);
         tracker.delete(item2.getId());
-        List<Item> result = tracker.findAll();
+        List<Item> result = tracker.findAll(null);
         assertThat(result.get(1).getId(), is(item3.getId()));
     }
     @Test

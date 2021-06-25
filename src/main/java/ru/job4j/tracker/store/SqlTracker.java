@@ -10,6 +10,7 @@ import ru.job4j.tracker.item.Item;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.*;
+import java.util.function.Consumer;
 
 public class SqlTracker implements Store {
 
@@ -81,14 +82,14 @@ public class SqlTracker implements Store {
     }
 
     @Override
-    public List<Item> findAll() {
+    public List<Item> findAll(Consumer<String> consumer) {
         List<Item> list = new LinkedList<>();
         try (Statement statement = this.connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery("select * from items;");
             while (resultSet.next()) {
                 Item item = new Item(resultSet.getString("name"));
                 item.setId(String.valueOf(resultSet.getInt("id")));
-                list.add(item);
+                consumer.accept(String.format("%s, %s", item.getName(), item.getId()));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

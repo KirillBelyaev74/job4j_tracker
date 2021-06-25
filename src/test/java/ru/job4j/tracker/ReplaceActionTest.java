@@ -26,6 +26,6 @@ public class ReplaceActionTest {
         Input input = mock(ValidateInput.class);
         when(input.askStr(any(String.class))).thenReturn(item.getId(), replacedName);
         baseAction.execute(input, tracker, null);
-        assertThat(tracker.findAll().get(0).getName(), is(replacedName));
+        assertThat(tracker.findAll(null).get(0).getName(), is(replacedName));
     }
 }
