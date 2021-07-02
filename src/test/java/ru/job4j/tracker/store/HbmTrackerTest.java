@@ -30,7 +30,7 @@ public class HbmTrackerTest {
         tracker.add(first);
         tracker.add(second);
         tracker.add(third);
-        List<Items> items = tracker.findAll(null);
+        List<Items> items = tracker.findAll();
         assertThat(items.size(), is(3));
     }
 

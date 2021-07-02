@@ -1,7 +1,5 @@
 package ru.job4j.tracker.store;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import ru.job4j.tracker.item.Item;
 
 import java.util.ArrayList;
@@ -9,8 +7,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
 
-@Component
-@Scope("prototype")
 public class Tracker implements Store {
     /**
      * Массив для хранение заявок.
@@ -73,11 +69,9 @@ public class Tracker implements Store {
 
     /**
      * Метод возвращает все заполненые items
-     *
-     * @return - массив без null элементов
      */
-    public List<Item> findAll(Consumer<String> consumer) {
-        return this.items;
+    public void findAll(Consumer<String> consumer) {
+        this.items.forEach(i -> consumer.accept(String.format("%s, %s", i.getName(), i.getId())));
     }
 
     /**

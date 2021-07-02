@@ -1,23 +1,19 @@
 package ru.job4j.tracker;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.stereotype.Component;
 import ru.job4j.tracker.action.*;
-import ru.job4j.tracker.input.ConsoleInput;
 import ru.job4j.tracker.input.Input;
 import ru.job4j.tracker.input.ValidateInput;
+import ru.job4j.tracker.store.HbmTracker;
+import ru.job4j.tracker.store.SqlTracker;
 import ru.job4j.tracker.store.Store;
-import ru.job4j.tracker.store.Tracker;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
 public class StartUI {
 
-    @Autowired
     private final Input input;
-    @Autowired
     private final Store store;
     private final Consumer<String> output;
 
@@ -44,14 +40,14 @@ public class StartUI {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
         context.scan("ru.job4j.tracker");
         context.refresh();
 
         Input validate = context.getBean(ValidateInput.class);
-        Store store = context.getBean(Store.class);
-
+        Store store = context.getBean(SqlTracker.class);
+        store.init();
         ArrayList<BaseAction> actions = new ArrayList<>();
         actions.add(new CreateAction(0, "Добавление"));
         actions.add(new ReplaceAction(1, "Редактирование"));
@@ -60,5 +56,6 @@ public class StartUI {
         actions.add(new FindByNameAction(4, "Найти по имени"));
         actions.add(new FindByIdAction(5, "Найти по ID"));
         new StartUI(validate, store, System.out::println).init(actions);
+        store.close();
     }
 }

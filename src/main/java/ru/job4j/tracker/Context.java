@@ -1,7 +1,4 @@
-package ru.job4j.tracker.store;
-
-import ru.job4j.tracker.input.ConsoleInput;
-import ru.job4j.tracker.input.Input;
+package ru.job4j.tracker;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;

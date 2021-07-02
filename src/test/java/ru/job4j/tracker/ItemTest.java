@@ -21,23 +21,7 @@ public class ItemTest {
         tracker.add(first);
         tracker.add(second);
         tracker.add(third);
-        List<Item> result = tracker.findAll(null);
-        Collections.sort(result);
-        List<Item> expect = Arrays.asList(third, second, first);
-        assertThat(result, is(expect));
-    }
-    @Test
-    public void whenFirstSecondThenSecondFirst() {
-        Item first = new Item("Artem");
-        Item second = new Item("Petr");
-        Item third = new Item("Ivan");
-        Tracker tracker = new Tracker();
-        tracker.add(first);
-        tracker.add(second);
-        tracker.add(third);
-        List<Item> result = tracker.findAll(null);
-        Collections.sort(result, Collections.reverseOrder());
-        List<Item> expect = Arrays.asList(second, third, first);
-        assertThat(result, is(expect));
+        tracker.findAll(System.out::println);
+        assertThat(first.getName(), is(tracker.findById(first.getId()).getName()));
     }
 }

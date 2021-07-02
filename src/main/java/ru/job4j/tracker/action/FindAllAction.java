@@ -13,7 +13,7 @@ public class FindAllAction extends BaseAction {
     }
 
     public boolean execute(Input input, Store store, Consumer<String> output) {
-        store.findAll(System.out::print);
+        store.findAll(output);
         return true;
     }
 }

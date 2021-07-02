@@ -1,17 +1,16 @@
 package ru.job4j.tracker.store;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ru.job4j.tracker.StartUI;
-import ru.job4j.tracker.action.*;
-import ru.job4j.tracker.input.ConsoleInput;
-import ru.job4j.tracker.input.Input;
-import ru.job4j.tracker.input.ValidateInput;
+
+import org.springframework.stereotype.Component;
 import ru.job4j.tracker.item.Item;
 
 import java.io.InputStream;
 import java.sql.*;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Properties;
 import java.util.function.Consumer;
 
+@Component
 public class SqlTracker implements Store {
 
     private Connection connection;
@@ -40,7 +39,7 @@ public class SqlTracker implements Store {
     @Override
     public Item add(Item item) {
         try (PreparedStatement preparedStatement = this.connection.prepareStatement(
-                "insert into items(name) values (initcap(?));", Statement.RETURN_GENERATED_KEYS)) {
+                "insert into items(name) values (initcap(?))", Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, item.getName());
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -82,8 +81,7 @@ public class SqlTracker implements Store {
     }
 
     @Override
-    public List<Item> findAll(Consumer<String> consumer) {
-        List<Item> list = new LinkedList<>();
+    public void findAll(Consumer<String> consumer) {
         try (Statement statement = this.connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery("select * from items;");
             while (resultSet.next()) {
@@ -94,7 +92,6 @@ public class SqlTracker implements Store {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return list;
     }
 
     @Override
@@ -130,25 +127,5 @@ public class SqlTracker implements Store {
             throwables.printStackTrace();
         }
         return item;
-    }
-
-    public static void main(String[] args) {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-        context.scan("ru.job4j.tracker");
-        context.refresh();
-        Input validate = context.getBean(ValidateInput.class);
-        try (Store tracker = new SqlTracker()) {
-            tracker.init();
-            ArrayList<BaseAction> actions = new ArrayList<>();
-            actions.add(new CreateAction(0, "Добавление"));
-            actions.add(new ReplaceAction(1, "Редактирование"));
-            actions.add(new DeleteAction(2, "Удаление"));
-            actions.add(new FindAllAction(3, "Показать все"));
-            actions.add(new FindByNameAction(4, "Найти по имени"));
-            actions.add(new FindByIdAction(5, "Найти по ID"));
-            new StartUI(validate, tracker, System.out::println).init(actions);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

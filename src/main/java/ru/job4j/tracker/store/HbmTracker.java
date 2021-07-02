@@ -4,11 +4,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
-import ru.job4j.tracker.item.Item;
 import ru.job4j.tracker.item.Items;
 
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class HbmTracker {
@@ -16,6 +14,7 @@ public class HbmTracker {
     private static class InstanceSessionFactory {
         private static final SessionFactory SESSION_FACTORY = new Configuration().configure().buildSessionFactory();
     }
+
     private static SessionFactory getInstance() {
         return InstanceSessionFactory.SESSION_FACTORY;
     }
@@ -66,7 +65,7 @@ public class HbmTracker {
         return result == 1;
     }
 
-    public List<Items> findAll(Consumer<String> consumer) {
+    public List<Items> findAll() {
         List<Items> items;
         try (Session session = getInstance().openSession()) {
             session.beginTransaction();

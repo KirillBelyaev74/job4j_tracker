@@ -26,7 +26,7 @@ public class HbmTrackerOneTest {
         Items two = new Items("two", "second", new Timestamp(System.currentTimeMillis()));
         hbmTracker.add(one);
         hbmTracker.add(two);
-        List<Items> result = hbmTracker.findAll(null);
+        List<Items> result = hbmTracker.findAll();
         assertThat(List.of(one, two), is(result));
     }
 
