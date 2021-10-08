@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.function.Consumer;
 
-@Component
 public class SqlTracker implements Store {
 
     private Connection connection;

@@ -4,9 +4,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import ru.job4j.tracker.action.*;
 import ru.job4j.tracker.input.Input;
 import ru.job4j.tracker.input.ValidateInput;
-import ru.job4j.tracker.store.HbmTracker;
-import ru.job4j.tracker.store.SqlTracker;
 import ru.job4j.tracker.store.Store;
+import ru.job4j.tracker.store.Tracker;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
@@ -46,7 +45,7 @@ public class StartUI {
         context.refresh();
 
         Input validate = context.getBean(ValidateInput.class);
-        Store store = context.getBean(SqlTracker.class);
+        Store store = context.getBean(Tracker.class);
         store.init();
         ArrayList<BaseAction> actions = new ArrayList<>();
         actions.add(new CreateAction(0, "Добавление"));
